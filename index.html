@@ -1,0 +1,102 @@
+<html>
+<head>
+    <title>Search Challenge</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="notes-widget.js"></script>
+    <script src="test-maker.js"></script>
+    <script>
+    window.addEventListener("DOMContentLoaded", function() {
+        widget = new NotesWidget(document.querySelector(".notes-widget"));
+
+        //Creates a global function called startTests,
+        //that can be called from browser console
+        window.startTests = function () {
+            test("Widget add notes", function() {
+                ok(widget.notes.length === 0, "Widget starts empty");
+
+                var identifier = widget.addNote("blah");
+                var note = widget.notes[0];
+                
+                ok(note.id === identifier, "addNote returns correct identifier");
+                ok(note.content === "blah", "addNote adds a note with given content");
+
+                widget.clear(); // cleanup
+            });
+            test("Widget get note", function() {
+                var identifier = widget.addNote("asdf");
+
+                ok(widget.getNote(identifier) === "asdf");
+
+                widget.clear();
+            });
+            test("Widget remove notes", function() {
+                var identifier = widget.addNote("whatever");
+
+                ok(widget.notes.length === 1, "Note was created");
+
+                widget.removeNote(identifier);
+
+                ok(widget.notes.length === 0, "Note was removed");
+
+                widget.clear();
+            });
+            test("Widget filter notes", function() {
+                //put some data
+                widget.addNote("herp");
+                widget.addNote("derp");
+                widget.addNote("potato");
+                
+                var validNotes = widget.filterNotes(function(content) {
+                    //string.indexOf returns -1 if not found, so if it's 0
+                    //or more, the word exists inside the content
+                    return content.indexOf("erp") >= 0;
+                });
+
+                ok(validNotes.length === 2, "correct number of matches");
+
+                widget.clear();
+            });
+            test("Filter should create elements", function() {
+                widget.addNote("a");
+                widget.addNote("b");
+
+                //creates a spy
+                var old = widget.createNoteElement;
+                widget.createNoteElement = spy(widget.createNoteElement, widget);
+
+                widget.filterNotes();
+
+                ok(widget.createNoteElement.called.length === 2, "created 2 note elements");
+
+                widget.createNoteElement = old; //restore function
+                widget.clear();
+            });
+            test("Content can be edited", function() {
+                var identifier = widget.addNote("asdf");
+
+                widget.setContent(identifier, "qwer");
+
+                ok(widget.getNote(identifier) === "qwer", "content was changed");
+
+                widget.clear();
+            });
+        };
+    })
+    </script>
+</head>
+<body>
+    <a href="out/">Documentation</a>
+    <div class="notes-widget">
+        <div class="search-container">
+            <input type="search" class="search-field" placeholder="Find in your notes">
+            <div class="new-note"></div>
+        </div>
+        <div class="notes-container">
+            <div class="note">
+                <textarea class="note-content"></textarea>
+                <div class="note-close"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

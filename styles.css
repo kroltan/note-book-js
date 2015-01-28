@@ -1,0 +1,91 @@
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.notes-widget {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.notes-widget .search-container,
+.notes-widget .notes-container,
+.notes-widget .notes-container .note {
+    width: 100%;
+}
+
+.notes-widget .search-container {
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.notes-widget .search-container .search-field,
+.notes-widget .notes-container .note {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 1em;
+    border: 1px solid #d0d0d0;
+}
+
+.notes-widget .search-container .search-field {
+    width: calc(100% - 40px);
+    height: 50px;
+    background: transparent;
+    box-shadow: 0 0 5px #d0d0d0;
+}
+
+.notes-widget .search-container .new-note {
+    margin-top: 15px;
+}
+
+.notes-widget .notes-container .note .note-content {
+    width: calc(100% - 40px);
+    background: transparent;
+    border: 1px solid transparent;
+    resize: none;
+}
+.notes-widget .notes-container .note .note-content:hover,
+.notes-widget .notes-container .note .note-content:focus {
+    resize: vertical;
+    border: 1px solid #d0d0d0;
+}
+
+.notes-widget .search-container .new-note,
+.notes-widget .notes-container .note .note-close {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    float: right;
+    position: relative;
+}
+.notes-widget .search-container .new-note::before,
+.notes-widget .search-container .new-note::after,
+.notes-widget .notes-container .note .note-close::before,
+.notes-widget .notes-container .note .note-close::after {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 4px;
+    display: block;
+    background: #d0d0d0;
+    content: "";
+    transform-origin: 50% 50%;
+}
+.notes-widget .notes-container .note .note-close::before {
+    transform: rotate(45deg);
+}
+.notes-widget .notes-container .note .note-close::after {
+    transform: rotate(135deg);
+}
+.notes-widget .search-container .new-note::after {
+    transform: rotate(90deg);
+}
+.notes-widget .notes-container .note .note-close:hover::before,
+.notes-widget .notes-container .note .note-close:hover::after {
+    background: #b00;
+}
+.notes-widget .search-container .new-note::before,
+.notes-widget .search-container .new-note::after {
+    background: #0b0;
+}
