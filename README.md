@@ -13,7 +13,7 @@ Open a Terminal window on this folder, and run (type then press enter) the
 following commands, inserting your password where needed:
 
     sudo apt-get install nodejs npm
-    sudo npm install -g jsdoc ws
+    sudo npm install -g jsdoc local-web-server
     jsdoc .
     ws
 
